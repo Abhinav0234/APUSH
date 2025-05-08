@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AP U.S. History Review</title>
+  <style>
+    :root {
+      --flag-red: #B22234;
+      --flag-white: #FFFFFF;
+      --flag-blue: #3C3B6E;
+      --text-dark: #333;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: linear-gradient(to bottom, #f8f8f8 0%, #ffffff 100%);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+    /* top stripe */
+    body::before {
+      content: "";
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 10px;
+      background: linear-gradient(
+        90deg,
+        var(--flag-red) 33.3%,
+        var(--flag-white) 33.3%,
+        var(--flag-white) 66.6%,
+        var(--flag-blue) 66.6%
+      );
+      z-index: 1000;
+    }
+    /* animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    /* hero */
+    .hero {
+      height: 80vh;
+      background:
+        linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+        url('https://upload.wikimedia.org/wikipedia/commons/e/ec/Unites_States_Capitol_west_facade_edit2.jpg')
+        center/cover no-repeat;
+      display: flex; justify-content: center; align-items: center;
+      text-align: center; color: white; padding: 0 20px;
+    }
+    .hero-text h1 {
+      font-size: 4rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+      animation: fadeInDown 1s ease-out;
+    }
+    .hero-text p {
+      font-size: 1.5rem; margin-top: 20px; max-width: 800px;
+    }
+    /* nav */
+    nav {
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-container {
+      display: flex; justify-content: space-between; align-items: center;
+      max-width: 1200px; margin: 0 auto; padding: 15px 20px;
+    }
+    .logo {
+      font-size: 1.5rem; font-weight: 700; color: var(--flag-red);
+    }
+    .nav-links {
+      display: flex; list-style: none; flex-wrap: wrap;
+    }
+    .nav-links li { margin-left: 20px; }
+    .nav-links a {
+      text-decoration: none; color: var(--text-dark);
+      font-weight: 500; transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--flag-red); }
+    /* sections */
+    .section {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      padding: 80px 20px; max-width: 1200px; margin: 0 auto;
+    }
+    .section.visible {
+      opacity: 1; transform: translateY(0);
+      animation: fadeInUp 0.6s ease-out;
+    }
+    .section-title {
+      text-align: center; margin-bottom: 50px; position: relative;
+    }
+    .section-title h2 {
+      font-size: 2.5rem; color: var(--text-dark); margin-bottom: 20px;
+    }
+    .section-title::after {
+      content: ""; display: block; width: 80px; height: 4px;
+      background: linear-gradient(90deg, var(--flag-red), var(--flag-blue));
+      margin: 0 auto;
+    }
+    .section img {
+      width: 100%; height: auto; border-radius: 8px; margin-bottom: 20px;
+    }
+    .section p {
+      line-height: 1.6; margin-bottom: 15px;
+    }
+    .section ul {
+      list-style: disc inside; margin-bottom: 15px; line-height: 1.6;
+    }
+    .read-more {
+      display: inline-block; color: var(--flag-red);
+      text-decoration: none; font-weight: 500; position: relative;
+      margin-right: 15px;
+    }
+    .read-more::after {
+      content: ""; position: absolute; bottom: -2px; left: 0;
+      width: 0; height: 2px; background-color: var(--flag-red);
+      transition: width 0.3s;
+    }
+    .read-more:hover::after { width: 100%; }
+    /* footer */
+    footer {
+      background: #333; color: white; padding: 60px 20px 20px;
+    }
+    .footer-content {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+      gap: 30px;
+    }
+    .footer-column h3 {
+      color: var(--flag-red); margin-bottom: 20px;
+      font-size: 1.2rem; position: relative; padding-bottom: 10px;
+    }
+    .footer-column h3::after {
+      content: ""; position: absolute; bottom: 0; left: 0;
+      width: 30px; height: 2px; background-color: var(--flag-red);
+    }
+    .footer-column ul { list-style: none; }
+    .footer-column li { margin-bottom: 10px; }
+    .footer-column a {
+      color: #ccc; text-decoration: none; transition: color 0.3s;
+    }
+    .footer-column a:hover { color: var(--flag-red); }
+    .copyright {
+      text-align: center; margin-top: 40px; padding-top: 20px;
+      border-top: 1px solid #555; color: #aaa; font-size: 0.9rem;
+    }
+    @media (max-width:768px) { .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-text">
+      <h1>AP U.S. History Review</h1>
+      <p>Your ultimate resource to score a 5 on the APUSH exam</p>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo">APUSH Review</div>
+      <ul class="nav-links">
+        <li><a href="#unit1">Unit 1</a></li>
+        <li><a href="#unit2">Unit 2</a></li>
+        <li><a href="#unit3">Unit 3</a></li>
+        <li><a href="#unit4">Unit 4</a></li>
+        <li><a href="#unit5">Unit 5</a></li>
+        <li><a href="#unit6">Unit 6</a></li>
+        <li><a href="#unit7">Unit 7</a></li>
+        <li><a href="#unit8">Unit 8</a></li>
+        <li><a href="#unit9">Unit 9</a></li>
+        <li><a href="#exam">Exam Structure</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Unit 1 -->
+  <section class="section" id="unit1">
+    <div class="section-title"><h2>Unit 1 (1491–1607)</h2></div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Native_American_Pueblo_House.jpg" alt="Pueblo village">
+    <p>Before European contact, North America hosted diverse societies—Mississippian city-states like Cahokia, nomadic Plains tribes, and complex Iroquois confederacies—each adapting to their environment.</p>
+    <p>1620–1607 saw initial Spanish and French incursions. The Columbian Exchange introduced Old World diseases that decimated native populations, while new crops reshaped global agriculture.</p>
+    <ul>
+      <li>Major cultures: Cahokia, Iroquois, Pueblo</li>
+      <li>Columbian Exchange: maize, potatoes, smallpox</li>
+      <li>Labor: encomienda → early African slavery</li>
+    </ul>
+    <p><strong>Key Terms:</strong> Cahokia, encomienda, mestizo</p>
+    <a href="https://www.apstudynotes.org/us-history/topics/unit-1-1491-1607/" class="read-more" target="_blank">AP Study Notes</a>
+    <a href="https://www.youtube.com/@HeimlersHistory" class="read-more" target="_blank">Heimler’s History</a>
+  </section>
+
+  <!-- Unit 2 -->
+  <section class="section" id="unit2">
+    <div class="section-title"><h2>Unit 2 (1607–1754)</h2></div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/John_Smith_and_Pocahontas.jpg" alt="Jamestown">
+    <p>English colonies took root: Jamestown’s tobacco economy fueled settlement, while New England Puritans built tight-knit religious communities after 1620’s Plymouth landing.</p>
+    <p>Regional differences emerged—New England’s mixed agriculture vs. Chesapeake’s plantations. Indentured servitude gave way to racialized slavery by mid-1700s.</p>
+    <ul>
+      <li>Jamestown (1607) & Plymouth (1620)</li>
+      <li>Mayflower Compact & House of Burgesses</li>
+      <li>Growth of slavery & Bacon’s Rebellion</li>
+    </ul>
+    <p><strong>Key Terms:</strong> Mayflower Compact, headright system, Bacon’s Rebellion</p>
+    <a href="https://www.khanacademy.org/humanities/us-history/colonial-america" class="read-more" target="_blank">Khan Academy</a>
+    <a href="https://www.youtube.com/@HeimlersHistory" class="read-more" target="_blank">Heimler’s History</a>
+  </section>
+
+  <!-- Unit 3 -->
+  <section class="section" id="unit3">
+    <div class="section-title"><h2>Unit 3 (1754–1800)</h2></div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Continental_Congress_1774.jpg" alt="Continental Congress">
+    <p>The French & Indian War’s costs led Britain to tax colonies (Stamp, Townshend Acts), sparking resistance: “no taxation without representation.”</p>
+    <p>Revolution erupted in 1775, Declaration in 1776, and alliance with France secured victory by 1783. The new nation replaced the Articles of Confederation with the Constitution (1787) and Bill of Rights (1791).</p>
+    <ul>
+      <li>Stamp Act (1765) & Boston Tea Party (1773)</li>
+      <li>Declaration of Independence (1776)</li>
+      <li>Constitution & Federalist vs. Anti-Federalist debates</li>
+    </ul>
+    <p><strong>Key Terms:</strong> Stamp Act, Articles of Confederation, Bill of Rights</p>
+    <a href="https://www.apstudynotes.org/us-history/topics/unit-3-1754-1800/" class="read-more" target="_blank">AP Study Notes</a>
+    <a href="https://www.youtube.com/@HeimlersHistory" class="read-more" target="_blank">Heimler’s History</a>
+  </section>
+
+  <!-- Unit 4 -->
+  <section class="section" id="unit4">
+    <div class="section-title"><h2>Unit 4 (1800–1848)</h2></div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Lewis_and_Clark_meet_Shokw%C3%A4_._._.jpg" alt="Lewis & Clark">
+    <p>Jefferson’s Louisiana Purchase (1803) doubled U.S. lands. Marbury v. Madison (1803) asserted judicial review. The Market Revolution linked regions via canals, railroads, and telegraphs.</p>
+    <p>Social reform movements—abolition, temperance, women’s rights (Seneca Falls 1848)—crystallized as Americans debated slavery’s expansion into new territories.</p>
+    <ul>
+      <li>Louisiana Purchase & Lewis & Clark expedition</li>
+      <li>Erie Canal & steamboat networks</li>
+      <li>Seneca Falls Convention & Dorothea Dix reforms</li>
+    </ul>
+    <p><strong>Key Terms:</strong> Manifest Destiny, Missouri Compromise</p>
+    <a href="https://www.khanacademy.org/humanities/us-history/early-19th-century" class="read-more" target="_blank">Khan Academy</a>
+    <a href="https://www.youtube.com/@HeimlersHistory" class="read-more" target="_blank">Heimler’s History</a>
+  </section>
+
+  <!-- Unit 5 -->
+  <section class="section" id="unit5">
+    <div class="section-title"><h2>Unit 5 (1844–1877)</h2></div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/35/First_Reading_of_the_Emancipation_Proclamation_of_Abraham_Lincoln.JPG" alt="Emancipation Proclamation">
+    <p>The 1850s saw violent clashes over slavery (Bleeding Kansas), the Dred Scott decision (1857), and John Brown’s raid. War broke out in 1861; the Emancipation Proclamation (1863) reframed conflict as moral crusade.</p>
+    <p>Union victory (1865) abolished slavery (13th Amendment). Reconstruction amended citizenship rights (14th, 15th), but white Southern backlash instituted Jim Crow by 1877.</p>
+    <ul>
+      <li>Compromise of 1850 & Kansas-Nebraska Act</li>
+      <li>Civil War battles & Sherman’s March</li>
+      <li>Reconstruction Amendments & Black Codes</li>
+    </ul>
+    <p><strong>Key Terms:</strong> Emancipation Proclamation, Radical Republicans</p>
+    <a href="https://www.apstudynotes.org/us-history/topics/unit-5-1844-1877/" class="read-more" target="_blank">AP Study Notes</a>
+    <a href="https://www.youtube.com/@HeimlersHistory" class="read-more" target="_blank">Heimler’s History</a>
+  </section>
+
+  <!-- Unit 6 -->
+  <section class="section" id="unit6">
+    <div class="section-title"><h2>Unit 6 (1865–1898)</h2></div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Central_Pacific_Railroad.jpg" alt="Transcontinental Railroad">
+    <p>The Gilded Age saw rapid industrialization—Carnegie’s steel, Rockefeller’s oil—alongside massive immigration fueling urban growth and political machines.</p>
+    <p>Labor unrest (Haymarket Riot 1886, Pullman Strike 1894) prompted calls for reform, while federal policies (Homestead, Dawes Acts) displaced Native Americans.</p>
+    <ul>
+      <li>Rise of trusts & Social Darwinism</li>
+      <li>Knights of Labor & AFL formation</li>
+      <li>Tenements & Tammany Hall</li>
+    </ul>
+    <p><strong>Key Terms:</strong> Gospel of Wealth, political machines</p>
+    <a href="https://www.khanacademy.org/humanities/us-history/gilded-age" class="read-more" target="_blank">Khan Academy</a>
+    <a href="https://www.youtube.com/@HeimlersHistory" class="read-more" target="_blank">Heimler’s History</a>
+  </section>
+
+  <!-- Unit 7 -->
+  <section class="section" id="unit7">
+    <div class="section-title"><h2>Unit 7 (1890–1945)</h2></div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/7/74/Iconic_WWII_Image_%28Troops_Landing%2C_Iwo_Jima%29.jpg" alt="Iwo Jima">
+    <p>American imperialism expanded: Spanish-American War (1898) gained overseas territories; Panama Canal (1914) linked oceans. Progressives attacked monopolies and championed women’s suffrage.</p>
+    <p>WWI ushered U.S. onto world stage; the Great Depression (1929) led to FDR’s New Deal. WWII mobilization transformed economy and society, culminating in D-Day (1944) and Allied victory.</p>
+    <ul>
+      <li>Spanish-American War & Platt Amendment</li>
+      <li>19th Amendment & muckrakers</li>
+      <li>CCC, WPA & atomic bombings</li>
+    </ul>
+    <p><strong>Key Terms:</strong> New Deal, Lend-Lease</p>
+    <a href="https://www.apstudynotes.org/us-history/topics/unit-7-1890-1945/" class="read-more" target="_blank">AP Study Notes</a>
+    <a href="https://www.youtube.com/@HeimlersHistory" class="read-more" target="_blank">Heimler’s History</a>
+  </section>
+
+  <!-- Unit 8 -->
+  <section class="section" id="unit8">
+    <div class="section-title"><h2>Unit 8 (1945–1980)</h2></div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/BerlinWall-BrandenburgGate.jpg" alt="Berlin Wall">
+    <p>The Cold War dominated: Truman Doctrine (1947), Marshall Plan, NATO (1949). Proxy conflicts in Korea and Vietnam tested containment, while McCarthyism stoked domestic fears.</p>
+    <p>1960s–70s saw Civil Rights achievements (CR Act ’64, Voting Rights ’65), counterculture revolts, women’s liberation, and the environmental movement (EPA ’70). Watergate led to Nixon’s resignation (1974).</p>
+    <ul>
+      <li>Brown v. Board & Civil Rights Act</li>
+      <li>Korean & Vietnam Wars</li>
+      <li>Watergate & détente</li>
+    </ul>
+    <p><strong>Key Terms:</strong> McCarthyism, détente</p>
+    <a href="https://www.khanacademy.org/humanities/us-history/postwar-era" class="read-more" target="_blank">Khan Academy</a>
+    <a href="https://www.youtube.com/@HeimlersHistory" class="read-more" target="_blank">Heimler’s History</a>
+  </section>
+
+  <!-- Unit 9 -->
+  <section class="section" id="unit9">
+    <div class="section-title"><h2>Unit 9 (1980–Present)</h2></div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/George_W._Bush_Official_Painting.jpg" alt="Modern politics">
+    <p>Reaganomics and the fall of the Berlin Wall (1989) ended Cold War. 9/11 (2001) spurred the War on Terror. The 2008 financial crisis led to Dodd-Frank and ACA health reform.</p>
+    <p>In the 21st century, globalization, digital technology, and climate change debates shape American politics and society.</p>
+    <ul>
+      <li>Reagan Revolution & "tear down this wall"</li>
+      <li>PATRIOT Act & Iraq/Afghanistan</li>
+      <li>Great Recession & Affordable Care Act</li>
+    </ul>
+    <p><strong>Key Terms:</strong> globalization, social media age</p>
+    <a href="https://www.apstudynotes.org/us-history/topics/unit-9-1980-present/" class="read-more" target="_blank">AP Study Notes</a>
+    <a href="https://www.youtube.com/@HeimlersHistory" class="read-more" target="_blank">Heimler’s History</a>
+  </section>
+
+  <!-- Exam Structure -->
+  <section class="section" id="exam">
+    <div class="section-title"><h2>APUSH Exam Structure</h2></div>
+    <p>The AP U.S. History exam (3 hr 15 min) is divided into four sections:</p>
+    <ul>
+      <li><strong>Section I: Multiple-Choice & Stimulus</strong> (55 min, 40%): 55 questions, including 10-12 with primary/secondary sources.</li>
+      <li><strong>Section II A: Short Answer Questions (SAQs)</strong> (50 min, 20%): 3 prompts requiring evidence-based responses.</li>
+      <li><strong>Section II B: Document-Based Question (DBQ)</strong> (60 min, 25%): Analyze 4–6 documents + a prompt.</li>
+      <li><strong>Section II C: Long Essay Question (LEQ)</strong> (40 min, 15%): Choose 1 of 3 prompts to craft a thesis-driven essay.</li>
+    </ul>
+    <p>Time management is critical: allot minutes to outline essays, cite documents in DBQ, and leave time for proofreading. A clear thesis and strong evidence are keys to a 5.</p>
+  </section>
+
+  <!-- footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>About</h3>
+        <p>Everything you need to crush the APUSH exam—notes, images & key terms, all in one place.</p>
+      </div>
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#unit1">Unit 1</a></li>
+          <li><a href="#unit2">Unit 2</a></li>
+          <li><a href="#unit3">Unit 3</a></li>
+          <li><a href="#unit4">Unit 4</a></li>
+          <li><a href="#unit5">Unit 5</a></li>
+          <li><a href="#unit6">Unit 6</a></li>
+          <li><a href="#unit7">Unit 7</a></li>
+          <li><a href="#unit8">Unit 8</a></li>
+          <li><a href="#unit9">Unit 9</a></li>
+          <li><a href="#exam">Exam Structure</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Contact</h3>
+        <ul>
+          <li>Email: <a href="mailto:superabhinav05@gmail.com">superabhinav05@gmail.com</a></li>
+          <li>YouTube: <a href="https://www.youtube.com/@HeimlersHistory" target="_blank">Heimler’s History</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">&copy; 2025 APUSH Review</div>
+  </footer>
+
+  <script>
+    // smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a =>
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector(a.getAttribute('href'))
+                .scrollIntoView({ behavior: 'smooth' });
+      })
+    );
+    // fade-in sections
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.section').forEach(s => obs.observe(s));
+  </script>
+</body>
+</html>
